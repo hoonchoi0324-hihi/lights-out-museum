@@ -51,6 +51,7 @@ body{height:100%;margin:0;background:#07060b;color:var(--ink);overflow:hidden;to
 #skipBtn{position:absolute;right:14px;top:calc(12px + env(safe-area-inset-top,0px));z-index:11;display:none;border:1px solid rgba(243,234,215,.35);background:rgba(0,0,0,.45);color:var(--ink);
  border-radius:999px;padding:8px 14px;font:400 14px 'Gowun Dodum',sans-serif;cursor:pointer}
 body.cinema #skipBtn{display:block}
+body.cinema.fin #skipBtn{display:none}
 body.cinema .hud,body.cinema #alertWrap,body.cinema #mini,body.cinema #joyZone,body.cinema #lookZone,body.cinema #cross,body.cinema #joyHint,body.cinema #lookHint,body.cinema #flashBtn,body.cinema #muteBtn,body.cinema #vig{display:none}
 #credits{position:absolute;inset:0;z-index:10;background:#000;display:none;overflow:hidden;pointer-events:none}
 #credits.show{display:block}
@@ -62,6 +63,13 @@ body.cinema .hud,body.cinema #alertWrap,body.cinema #mini,body.cinema #joyZone,b
 #roll .name{font:700 22px 'Gowun Batang',serif}
 #roll .dots{opacity:.75}
 #roll svg{width:56px;margin-top:70px}
+#clear.screen{background:linear-gradient(to top,rgba(0,0,0,.78),transparent 42%);justify-content:flex-end;padding-bottom:calc(26px + env(safe-area-inset-bottom,0px))}
+#clear.show .endstrip{animation:fade 2.5s ease-out}
+.endstrip{display:flex;flex-direction:column;align-items:center}
+.endstrip .meta{font:400 14px 'Gowun Batang',serif;color:var(--brass)}
+.endstrip p{margin:6px 0 0;font:400 14px/1.6 'Gowun Batang',serif;opacity:.8}
+.endstrip .btn{margin-top:14px;padding:11px 28px;font-size:16px}
+.endstrip .sig{margin-top:14px}
 #redflash{position:absolute;inset:0;z-index:4;pointer-events:none;box-shadow:inset 0 0 0 0 rgba(255,40,40,0);transition:box-shadow .15s}
 
 /* Controls */
@@ -131,8 +139,8 @@ body.cinema .hud,body.cinema #alertWrap,body.cinema #mini,body.cinema #joyZone,b
   <div class="placard">
    <div class="icons">🔦 👁️ 📜</div>
    <h1>불 꺼진 박물관</h1>
-   <div class="meta">밤 11시 · 손전등 한 자루 · 전시품 다섯 점</div>
-   <p>경비원들이 한 명씩 사라진 뒤로<br>밤마다 복도를 걷는 '그것'이 있어요.<br>들키지 말고 전시품 다섯 점을 찾아 나가요.</p>
+   <div class="meta">밤 11시 · 손전등 한 자루 · 전시품 일곱 점</div>
+   <p>경비원들이 한 명씩 사라진 뒤로<br>밤마다 복도를 걷는 '그것'이 있어요.<br>들키지 말고 전시품 일곱 점을 찾아 나가요.</p>
   </div>
   <button class="btn" id="startBtn">들어가기</button>
   <div class="how">🕹️ 왼쪽 아래를 끌어서 이동 · 👆 나머지를 끌어서 둘러보기<br>⌨️ WASD 이동 · ←→ 또는 마우스 끌기로 둘러보기<br>🔦 그것은 빛을 따라와요. 손전등을 끄면 덜 띄어요 (F 키)<br>🗿 받침대 뒤에 숨으면 그것이 못 봐요<br>📜 경비원이 남긴 쪽지를 찾아보세요<br>🎧 이어폰을 끼면 발소리가 어느 쪽에서 나는지 들려요</div>
@@ -151,7 +159,7 @@ body.cinema .hud,body.cinema #alertWrap,body.cinema #mini,body.cinema #joyZone,b
   <div class="role">함께 만든 AI</div><div class="name">Claude</div>
   <div class="role">출연</div>
   <div class="dots">그것 ················ ???</div>
-  <div class="dots">마네킹 다섯 구 ········· 본인</div>
+  <div class="dots">마네킹 여덟 구 ········· 본인</div>
   <div class="dots">경비원 박 씨 ··········· 행방불명</div>
   <div class="dots">관장님 ················ 연락 두절</div>
   <div class="role">음악</div><div class="dots">불 꺼진 재즈 밴드</div>
@@ -160,11 +168,12 @@ body.cinema .hud,body.cinema #alertWrap,body.cinema #mini,body.cinema #joyZone,b
   <div class="dots" style="letter-spacing:.25em;font-size:13px">manamiwu</div>
  </div></div>
  <div class="screen" id="clear">
-  <div class="big">🏆</div>
-  <div class="placard"><h1>전시품을 모두 되찾았다</h1><div class="meta" id="clearTxt"></div>
-   <p>박물관에 다시 불이 켜졌어요.</p><p id="mystery" style="color:#c9a45c"></p></div>
-  <button class="btn" id="againBtn">한 번 더</button>
-  <div class="sig"><svg viewBox="0 0 323 300" aria-hidden="true"><circle cx="90" cy="96" r="50" fill="#f3ead7"/><rect x="40" y="158" width="100" height="100" fill="#f3ead7"/><polygon points="160,46 160,258 300,258" fill="#f3ead7"/></svg>Created by manamiwu</div>
+  <div class="endstrip">
+   <div class="meta" id="clearTxt"></div>
+   <p id="mystery"></p>
+   <button class="btn" id="againBtn">한 번 더</button>
+   <div class="sig"><svg viewBox="0 0 323 300" aria-hidden="true"><circle cx="90" cy="96" r="50" fill="#f3ead7"/><rect x="40" y="158" width="100" height="100" fill="#f3ead7"/><polygon points="160,46 160,258 300,258" fill="#f3ead7"/></svg>manamiwu</div>
+  </div>
  </div>
 </div>
 
@@ -173,39 +182,53 @@ body.cinema .hud,body.cinema #alertWrap,body.cinema #mini,body.cinema #joyZone,b
 // ================== 지도 ==================
 // # 벽 / . 바닥 / D 문 / o 전시 받침대(숨는 곳) / I 전시품 / P 시작 / E 출구
 const MAP=[
- "#####################",
- "#.....#.......#.....#",
- "#.P...#.......#..I..#",
- "#.....D.......D.....#",
- "#..o..#...o...#..o..#",
- "#.....#.......#.....#",
- "###D#####D#D#####D###",
- "#.....#.......#.....#",
- "#..I..#...I...D.....#",
- "#.....D.......#.....#",
- "#..o..#.o...o.#..I..#",
- "#.....#.......#.....#",
- "###D#########D###D###",
- "#...................#",
- "#..o....I....o...E..#",
- "#...................#",
- "#####################"
+ "###############################",
+ "#.......#.......#.......#.....#",
+ "#.P.....#...o...D.......#...I.#",
+ "#.......D.......#...o...#..o..#",
+ "#...o...#...o...#.....I.D.....#",
+ "#.......#.......#.......#.....#",
+ "####D#######D#######D######D###",
+ "#.......#.......#.......#.....#",
+ "#.......#..o.I..#.......D.....#",
+ "#...o...D.......#...o...#...I.#",
+ "#.I.....#.....o.D.......#..o..#",
+ "#.......#.......#.......#.....#",
+ "###D#########D#####D#######D###",
+ "#.......#.......#.......#.....#",
+ "#.....o.#.......D.......#..o..#",
+ "#..o....D...o...#...o...#.....#",
+ "#.......#.......#.I.....D.....#",
+ "#.......#.......#.......#.....#",
+ "#####D######D#######D######D###",
+ "#.............................#",
+ "#.........I...................#",
+ "#........o........o.....o...E.#",
+ "#.............................#",
+ "###############################"
 ];
 const H=MAP.length,W=MAP[0].length,CS=2;
 const ITEMS=[
- {e:"👑",name:"왕관"},{e:"💎",name:"푸른 보석"},{e:"🏺",name:"고대 항아리"},{e:"🦴",name:"공룡 화석"},{e:"🖼️",name:"명화"}
+ {e:"👑",name:"왕관"},{e:"💎",name:"푸른 보석"},{e:"🏺",name:"고대 항아리"},{e:"🦴",name:"공룡 화석"},{e:"🗡️",name:"고대의 검"},{e:"🖼️",name:"명화"},{e:"📿",name:"옥 목걸이"}
 ];
 // 경비 로봇 순찰 경로 (칸 좌표 [열,행])
 const ROUTES=[
- [[8,1],[12,1],[12,5],[8,5]],
- [[15,7],[19,7],[19,11],[15,11]],
- [[8,7],[12,7],[12,9],[8,9]],
- [[2,13],[18,13],[18,15],[2,15]]
+ [[9,1],[14,1],[14,5],[9,5]],
+ [[17,5],[22,5],[22,2],[17,2]],
+ [[2,8],[14,9]],
+ [[18,7],[23,11],[28,7]],
+ [[2,13],[14,17]],
+ [[17,13],[28,16]],
+ [[2,20],[15,20],[15,22],[2,22]],
+ [[16,19],[29,19],[29,22],[16,22]]
 ];
+// 🧍 마네킹 자리 (그것들은 이 칸을 피해 다님)
+const MANNEQUIN_CELLS=[[7,1],[15,5],[23,1],[29,11],[1,11],[9,17],[23,13],[1,22]];
+const MANN_SET=new Set(MANNEQUIN_CELLS.map(([c,r])=>c+","+r));
 
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const cell=(c,r)=>(r<0||r>=H||c<0||c>=W)?"#":MAP[r][c];
-const walkable=(c,r)=>{const t=cell(c,r);return t!=="#"&&t!=="o"};
+const walkable=(c,r)=>{const t=cell(c,r);return t!=="#"&&t!=="o"&&!MANN_SET.has(c+","+r)};
 const toCell=v=>Math.floor(v/CS);
 const ctr=i=>i*CS+CS/2;
 function findCells(ch){const a=[];MAP.forEach((row,r)=>[...row].forEach((t,c)=>{if(t===ch)a.push([c,r])}));return a}
@@ -433,7 +456,7 @@ function paintingTex(){
 }
 MAP.forEach((row,r)=>[...row].forEach((t,c)=>{
  if(t==="#"||t==="D")return;
- if(cell(c,r-1)==="#"&&rnd()<.45){
+ if(cell(c,r-1)==="#"&&rnd()<.3){
   const g=new THREE.Group();
   const frame=new THREE.Mesh(new THREE.BoxGeometry(1.3,1,.06),trimM);
   const pic=new THREE.Mesh(new THREE.PlaneGeometry(1.1,.8),new THREE.MeshStandardMaterial({map:paintingTex(),roughness:.9}));pic.position.z=.035;
@@ -557,16 +580,16 @@ const robots=ROUTES.map(makeRobot);
 
 // 📜 경비원이 남긴 쪽지
 const NOTES=[
- {c:12,r:2,title:"경비 일지 #1",text:"새로 들어온 '이름 없는 전시품' 상자에서 밤새 긁는 소리가 났다.\n관장님은 절대 열지 말라고 했다."},
- {c:5,r:10,title:"경비 일지 #2",text:"박 씨가 순찰을 나간 뒤 돌아오지 않았다.\n복도 끝에 키가 너무 큰 사람이 서 있었다.\n얼굴이… 없었다."},
- {c:16,r:14,title:"경비 일지 #3",text:"그것은 빛을 향해 온다. 불을 꺼라.\n받침대 뒤에 숨어라.\n그리고 절대 뒤돌아보지 마—"}
+ {c:14,r:1,title:"경비 일지 #1",text:"새로 들어온 '이름 없는 전시품' 상자에서 밤새 긁는 소리가 났다.\n관장님은 절대 열지 말라고 했다."},
+ {c:5,r:16,title:"경비 일지 #2",text:"박 씨가 순찰을 나간 뒤 돌아오지 않았다.\n복도 끝에 키가 너무 큰 사람이 서 있었다.\n얼굴이… 없었다."},
+ {c:26,r:13,title:"경비 일지 #3",text:"근무표에는 경비원이 여덟 명이다.\n그런데 오늘 밤 출근한 건\n나 혼자였다."},
+ {c:22,r:20,title:"경비 일지 #4",text:"그것은 빛을 향해 온다. 불을 꺼라.\n받침대 뒤에 숨어라.\n그리고 절대 뒤돌아보지 마—"}
 ].map(n=>{const s=sprite("📜",.55);s.position.set(ctr(n.c)+.3,.35,ctr(n.r)+.2);scene.add(s);return{...n,x:ctr(n.c)+.3,z:ctr(n.r)+.2,s,read:false}});
 let noteTimer=null;
 function showNote(n){const el=$("note");el.innerHTML=`<b>${n.title}</b>${n.text}`;el.classList.add("show");clearTimeout(noteTimer);noteTimer=setTimeout(()=>el.classList.remove("show"),8000)}
 $("note").addEventListener("pointerdown",e=>{e.stopPropagation();$("note").classList.remove("show")});
 
 // 🧍 마네킹: 안 보고 있을 때만 몰래 고개(와 몸)를 돌려 나를 본다. 해치진 않지만…
-const MANNEQUIN_CELLS=[[5,1],[1,11],[13,11],[19,15],[19,1]];
 const mannequins=MANNEQUIN_CELLS.map(([c,r],i)=>{
  const g=new THREE.Group(),skin=mat(0xcfc6b8,{roughness:.5}),holeM=new THREE.MeshBasicMaterial({color:0x000000});
  const legs=new THREE.Mesh(new THREE.CylinderGeometry(.13,.16,.8,10),skin);legs.position.y=.4;
@@ -579,7 +602,8 @@ const mannequins=MANNEQUIN_CELLS.map(([c,r],i)=>{
  const arms=new THREE.Mesh(new THREE.BoxGeometry(.1,.62,.62),skin);arms.position.y=1.08;
  const stand=new THREE.Mesh(new THREE.CylinderGeometry(.25,.25,.04,16),mat(0x222222));stand.position.y=.02;
  g.add(legs,torso,neck,head,arms,stand);
- const x=ctr(c)+(c<10?-.4:.4),z=ctr(r)+(r<8?-.4:.4),dir=Math.random()*Math.PI*2;
+ const ox=cell(c-1,r)==="#"?-.4:cell(c+1,r)==="#"?.4:0,oz=cell(c,r-1)==="#"?-.4:cell(c,r+1)==="#"?.4:0;
+ const x=ctr(c)+ox,z=ctr(r)+oz,dir=Math.random()*Math.PI*2;
  g.position.set(x,0,z);g.rotation.y=-dir;scene.add(g);
  return{g,head,x,z,dir,look:dir,wasSeen:true};
 });
@@ -594,6 +618,8 @@ function resetRobots(){
 }
 function resetPlayer(){player.x=ctr(START[0]);player.z=ctr(START[1]);player.dir=0;player.pitch=-.05}
 function newGame(){
+ document.body.classList.remove("fin");
+ if(FS)FS.g.visible=false;scene.fog.near=2;scene.fog.far=15;scene.background=new THREE.Color(0x050408);camera.rotation.z=0;
  hand.visible=true;
  AU.jazzStop();$("credits").classList.remove("show");document.body.classList.remove("cinema");
  if(ES)ES.g.visible=false;aura.intensity=.3;for(const b of robots)b.coneHolder.visible=true;
@@ -605,7 +631,7 @@ function newGame(){
  $("flashBtn").classList.remove("off");
  state="play";
  ["title","over","clear"].forEach(id=>$(id).classList.remove("show"));
- toast("전시품 다섯 점을 찾아라!");
+ toast("전시품 일곱 점을 찾아라!");
 }
 function drawFound(){$("found").innerHTML="🖼️ "+items.map(it=>`<span class="${it.got?"on":""}">${it.e}</span>`).join("")+(typeof NOTES!=="undefined"?` · 📜 ${NOTES.filter(n=>n.read).length}/${NOTES.length}`:"")}
 let toastT=null;
@@ -747,7 +773,7 @@ $("startBtn").onclick=()=>{AU.init();AU.startDrone();openingSeen?newGame():start
 
 // ================== 오프닝 ==================
 let openingSeen=false,op=null;
-const cineMon=makeRobot([[17,13]]);cineMon.g.visible=false;cineMon.coneHolder.visible=false;
+const cineMon=makeRobot([[19,19]]);cineMon.g.visible=false;cineMon.coneHolder.visible=false;
 let typeTimer=null;
 function typeText(str,cls=""){
  const el=$("cineText");clearInterval(typeTimer);el.className=cls;el.textContent="";
@@ -765,9 +791,9 @@ const OPEN_EV=[
  [16.9,()=>{AU.play("step",2)}],[17.4,()=>{AU.play("step",2)}],[17.85,()=>{AU.play("step",2)}],
  [18.6,()=>{AU.play("boom")}],
  [19.4,()=>{$("cine").classList.add("on")}],
- [21.0,()=>{AU.play("buzz");phoneMsg("전시품 다섯 점이 사라졌어요.")}],
- [23.3,()=>{AU.play("buzz");phoneMsg("전시품 다섯 점이 사라졌어요.<br>날이 밝기 전에 꼭 찾아주세요.")}],
- [25.8,()=>{AU.play("buzz");phoneMsg("전시품 다섯 점이 사라졌어요.<br>날이 밝기 전에 꼭 찾아주세요.<br><br>…그리고 그게 보이면, 숨으세요.")}],
+ [21.0,()=>{AU.play("buzz");phoneMsg("전시품 일곱 점이 사라졌어요.")}],
+ [23.3,()=>{AU.play("buzz");phoneMsg("전시품 일곱 점이 사라졌어요.<br>날이 밝기 전에 꼭 찾아주세요.")}],
+ [25.8,()=>{AU.play("buzz");phoneMsg("전시품 일곱 점이 사라졌어요.<br>날이 밝기 전에 꼭 찾아주세요.<br><br>…그리고 그게 보이면, 숨으세요.")}],
  [29.6,()=>{typeText("");$("cineText").className="titlecard";$("cineText").textContent="불 꺼진 박물관"}],
  [33.2,()=>endOpening()]
 ];
@@ -927,7 +953,7 @@ function openingFrame(dt){
  if(state!=="opening")return;
  // 카메라: 아래층 긴 복도를 천천히 걸어 들어감
  const k=clamp((t-11.2)/9,0,1);
- const cx=ctr(4)+k*2.6,cz=ctr(13)-.3,bob=Math.sin(t*4.2)*.03*(t<18.6?1:0);
+ const cx=ctr(4)+k*2.6,cz=ctr(19)-.2,bob=Math.sin(t*4.2)*.03*(t<18.6?1:0);
  let yaw=0+Math.sin(t*.5)*.05,pitch=-.03;
  camera.position.set(cx,1.55+bob,cz);
  camera.rotation.set(pitch,-yaw-Math.PI/2,t>18.6&&t<19.2?(Math.random()-.5)*.08:0);
@@ -947,7 +973,7 @@ function openingFrame(dt){
  else{
   m.g.visible=true;
   const near=t>=15.55;
-  m.x=near?ctr(10):ctr(18);m.z=cz+.2;m.dir=Math.PI;
+  m.x=near?ctr(10):ctr(19);m.z=cz+.2;m.dir=Math.PI;
   m.g.position.set(m.x,0,m.z);m.g.rotation.y=-m.dir;
   m.spine.rotation.z=-.45;m.neck.rotation.z=.35;
   m.arms[0].rotation.z=-.05;m.arms[1].rotation.z=.08;
@@ -995,14 +1021,83 @@ function update(dt){
   startEnding();return;
  }
 }
+// ================== 마지막 장면: 박물관 외관 ==================
+const FX=700;let FS=null,fin=null;
+function buildFinale(){
+ if(FS)return FS;
+ const g=new THREE.Group();g.visible=false;scene.add(g);
+ const stone=mat(0x8f8a7e,{roughness:.9}),dim=mat(0x6f6a60,{roughness:.95}),black=new THREE.MeshBasicMaterial({color:0x020203});
+ const ground=new THREE.Mesh(new THREE.PlaneGeometry(160,120),mat(0x0f160f));ground.rotation.x=-Math.PI/2;ground.position.set(FX,0,0);g.add(ground);
+ const plaza=new THREE.Mesh(new THREE.PlaneGeometry(26,16),mat(0x2b2b30));plaza.rotation.x=-Math.PI/2;plaza.position.set(FX,.01,11);g.add(plaza);
+ for(let i=0;i<3;i++){const st=new THREE.Mesh(new THREE.BoxGeometry(15-i*.8,.25,2.2-i*.5),stone);st.position.set(FX,.125+i*.25,5.3-i*.25);g.add(st)}
+ const body=new THREE.Mesh(new THREE.BoxGeometry(16,7,10),dim);body.position.set(FX,.75+3.5,-2);g.add(body);
+ for(let i=0;i<6;i++){const c=new THREE.Mesh(new THREE.CylinderGeometry(.33,.38,5.5,14),stone);c.position.set(FX-6+i*2.4,.75+2.75,3.9);g.add(c)}
+ const ent=new THREE.Mesh(new THREE.BoxGeometry(16.4,.8,1.9),stone);ent.position.set(FX,6.65,3.7);g.add(ent);
+ const tri=new THREE.Shape();tri.moveTo(-8.2,0);tri.lineTo(8.2,0);tri.lineTo(0,2.4);tri.lineTo(-8.2,0);
+ const ped=new THREE.Mesh(new THREE.ExtrudeGeometry(tri,{depth:1.6,bevelEnabled:false}),stone);ped.position.set(FX,7.05,2.85);g.add(ped);
+ // 간판
+ {const cv=document.createElement("canvas");cv.width=1024;cv.height=64;const x=cv.getContext("2d");x.fillStyle="#8f8a7e";x.fillRect(0,0,1024,64);
+  x.fillStyle="#3a3630";x.font="700 40px 'Gowun Batang',serif";x.textAlign="center";x.textBaseline="middle";x.fillText("국 립  자 연 사  박 물 관",512,34);
+  const p=new THREE.Mesh(new THREE.PlaneGeometry(9,.56),new THREE.MeshStandardMaterial({map:new THREE.CanvasTexture(cv),roughness:.9}));p.position.set(FX,6.65,4.66);g.add(p)}
+ // 1층 창문과 문 (모두 캄캄)
+ for(let i=0;i<5;i++){if(i===2)continue;const w=new THREE.Mesh(new THREE.PlaneGeometry(1,2),black);w.position.set(FX-4.8+i*2.4,3.4,3.02);g.add(w)}
+ const door=new THREE.Mesh(new THREE.PlaneGeometry(1.6,3),black);door.position.set(FX,2.25,3.02);g.add(door);
+ // 지붕 삼각벽의 둥근 창 — 그리고 그 안에서 이쪽을 보는 그것
+ const winY=8.05,winZ=4.46;
+ const frame=new THREE.Mesh(new THREE.RingGeometry(.44,.54,32),stone);frame.position.set(FX,winY,winZ+.01);g.add(frame);
+ const glass=new THREE.Mesh(new THREE.CircleGeometry(.44,32),new THREE.MeshBasicMaterial({color:0x2a0c06}));glass.position.set(FX,winY,winZ);g.add(glass);
+ const fig=new THREE.Group();fig.position.set(FX,winY,winZ+.005);g.add(fig);
+ const headS=new THREE.Mesh(new THREE.CircleGeometry(.1,20),black);headS.scale.set(.85,1.45,1);headS.position.set(0,.02,0);
+ const neckS=new THREE.Mesh(new THREE.PlaneGeometry(.05,.14),black);neckS.position.set(0,-.17,0);
+ const shS=new THREE.Mesh(new THREE.PlaneGeometry(.5,.22),black);shS.position.set(0,-.34,0);
+ fig.add(headS,neckS,shS);
+ const eyeM=new THREE.SpriteMaterial({map:glowTex(),color:0xffffff,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,fog:false});
+ const eyes=new THREE.Group();eyes.position.set(0,.04,.01);fig.add(eyes);
+ for(const x of[-.035,.035]){const e=new THREE.Sprite(eyeM);e.scale.set(.11,.11,1);e.position.set(x,0,0);eyes.add(e)}
+ // 가로등
+ const lamps=[];
+ for(const x of[-9,9]){const pole=new THREE.Mesh(new THREE.CylinderGeometry(.06,.08,3.6,8),mat(0x222226));pole.position.set(FX+x,1.8,8);g.add(pole);
+  const b=new THREE.Mesh(new THREE.SphereGeometry(.16,10,8),new THREE.MeshBasicMaterial({color:0xffd9a0}));b.position.set(FX+x,3.7,8);g.add(b);
+  const l=new THREE.PointLight(0xffc98a,1.1,11,1.4);l.position.set(FX+x,3.6,8);g.add(l);lamps.push(l)}
+ // 나무 실루엣
+ for(const s of[-1,1])for(let i=0;i<4;i++){const h=5+Math.random()*3;const tr=new THREE.Mesh(new THREE.ConeGeometry(1.4+Math.random(),h,7),mat(0x0b120c));tr.position.set(FX+s*(12+i*2.6+Math.random()),h/2,-3+Math.random()*9);g.add(tr)}
+ // 달과 별
+ const moon=new THREE.Mesh(new THREE.SphereGeometry(2,20,14),new THREE.MeshBasicMaterial({color:0xe9ecf5,fog:false}));moon.position.set(FX+22,26,-60);g.add(moon);
+ const halo=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(),color:0x8fa0d0,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,fog:false,opacity:.5}));halo.scale.set(18,18,1);halo.position.copy(moon.position);g.add(halo);
+ const N=500,pos=new Float32Array(N*3);for(let i=0;i<N;i++){pos[i*3]=FX-90+Math.random()*180;pos[i*3+1]=10+Math.random()*60;pos[i*3+2]=-80+Math.random()*30}
+ const sg=new THREE.BufferGeometry();sg.setAttribute("position",new THREE.BufferAttribute(pos,3));g.add(new THREE.Points(sg,new THREE.PointsMaterial({color:0xffffff,size:.25,fog:false})));
+ const ml=new THREE.DirectionalLight(0x9aa8d8,.55);ml.position.set(FX+22,26,-10);ml.target.position.set(FX,0,0);g.add(ml,ml.target);
+ const fill=new THREE.DirectionalLight(0x6070a0,.25);fill.position.set(FX,8,30);fill.target.position.set(FX,4,0);g.add(fill,fill.target);
+ return FS={g,eyes,fig,lamps};
+}
+function startFinale(){
+ buildFinale();FS.g.visible=true;
+ state="finale";fin={t:0,blink:3,tilt:0,tiltT:4};
+ document.body.classList.add("cinema","fin");
+ scene.fog.near=40;scene.fog.far=140;scene.background=new THREE.Color(0x05060c);
+ flash.intensity=0;aura.intensity=0;hand.visible=false;
+ for(const b of robots){b.g.visible=false;b.coneHolder.visible=false}
+ AU.jazzStop();
+ setTimeout(()=>{if(state==="finale")$("clear").classList.add("show")},2600);
+}
+function finaleFrame(dt){
+ fin.t+=dt;const t=fin.t,k=Math.min(1,t/25);
+ camera.position.set(FX+Math.sin(t*.05)*.4,1.7,31-k*5);
+ camera.rotation.set(.1+k*.02,0,0);
+ // 창 안의 그것: 가끔 눈을 깜빡이고, 고개를 아주 천천히 갸웃
+ fin.blink-=dt;FS.eyes.visible=!(fin.blink<0&&fin.blink>-.14);if(fin.blink<-.14)fin.blink=3+Math.random()*4;
+ fin.tiltT-=dt;if(fin.tiltT<=0){fin.tiltT=4+Math.random()*5;fin.tilt=(Math.random()-.5)*.5}
+ FS.fig.rotation.z+=(fin.tilt-FS.fig.rotation.z)*Math.min(1,dt*.8);
+ FS.lamps[0].intensity=1.1*(Math.random()<.01?.2:1);
+ renderer.render(scene,camera);
+}
 function showClear(){
-  state="clear";
+  startFinale();
   $("clearTxt").textContent=`걸린 시간 ${fmt(time)} · 남은 기회 ${"❤️".repeat(lives)}`;
-  $("mystery").textContent=NOTES.every(n=>n.read)?"…그런데 사라진 경비원은 모두 몇 명이었더라?":"📜 아직 읽지 않은 경비 일지가 남아 있어요.";
-  $("clear").classList.add("show");
+  $("mystery").textContent=NOTES.every(n=>n.read)?"…그런데 사라진 경비원은 모두 몇 명이었더라?":"📜 아직 읽지 않은 경비 일지가 있어요.";
 }
 
-const mini=$("mini"),mctx=mini.getContext("2d"),MS=5;
+const mini=$("mini"),mctx=mini.getContext("2d"),MS=4;
 mini.width=W*MS;mini.height=H*MS;mini.style.width=W*MS+"px";mini.style.height=H*MS+"px";
 function drawMini(){
  mctx.clearRect(0,0,mini.width,mini.height);
@@ -1097,6 +1192,7 @@ function loop(now){
  if(state==="opening"){openingFrame(dt);requestAnimationFrame(loop);return}
  if(state==="ending"){endingFrame(dt);requestAnimationFrame(loop);return}
  if(state==="credits"){requestAnimationFrame(loop);return}
+ if(state==="finale"){finaleFrame(dt);requestAnimationFrame(loop);return}
  update(dt);render(now/1000,dt);
  requestAnimationFrame(loop);
 }
